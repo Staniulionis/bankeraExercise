@@ -9,5 +9,11 @@ it("Spectrocoin test", () => {
   cy.contains('USD').click()
   cy.contains('EUR').click()
   cy.get('.css-1836tev').should('have.text', 'EUR')
-  cy.get('tr:nth-child(1) td:nth-child(3)').should('contain.text', '+')
+  cy.get('tr:nth-child(1) td:nth-child(3)').then(($element) => {
+    if ($element.hasClass('MobileTable_green__uQizf')) {
+      cy.wrap($element).should('contain.text', '+')
+    } else if ($element.hasClass('MobileTable_red__robxd')) {
+      cy.wrap($element).should('contain.text', '-')
+    }
+  })
 })
